@@ -1,7 +1,7 @@
 configobj
 Django>=1.11,<2.0
 django-auth-ldap>=1.2.12
-django-restricted-resource>=2014.9
+django-restricted-resource>=2016.8
 django-tables2>=1.14.2
 django-testscenarios
 djangorestframework

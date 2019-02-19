@@ -12,7 +12,6 @@ ENV RUNTIME_DEPS="\
     tftp-hpa \
 "
 
-# FIXME django-restricted-resource latest release isn't available on pypi
 COPY requirements.txt ./
 
 RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} \
