@@ -1,0 +1,15 @@
+configobj
+file-magic
+Jinja2
+netifaces>=0.10.0
+nose
+pexpect>=4.2.0
+pyocd
+pytest
+pytz
+pyudev>=0.21.0
+PyYAML>=4.2b4
+pyzmq
+requests
+setproctitle>=1.1.8
+voluptuous>=0.8.8
