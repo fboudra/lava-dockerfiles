@@ -8,6 +8,7 @@ ENV BUILD_DEPS="\
 "
 
 ENV RUNTIME_DEPS="\
+    apache2 \
     git \
     tftp-hpa \
 "

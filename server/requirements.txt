@@ -7,6 +7,7 @@ django-testscenarios
 djangorestframework
 docutils>=0.6
 file-magic
+gunicorn
 Jinja2
 junit-xml>=1.8
 netifaces>=0.10.0
