@@ -15,8 +15,9 @@ ENV RUNTIME_DEPS="\
 
 COPY requirements.txt ./
 
-RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} \
-  && apk add --no-cache ${RUNTIME_DEPS} \
-  && pip install --no-cache-dir -r requirements.txt \
-  && apk del --no-cache --purge .build-deps \
-  && rm -rf /var/cache/apk/*
+RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
+    apk add --no-cache ${RUNTIME_DEPS} ;\
+    pip install --no-cache-dir -r requirements.txt ;\
+    # Cleanup
+    apk del --no-cache --purge .build-deps ;\
+    rm -rf /var/cache/apk/*
