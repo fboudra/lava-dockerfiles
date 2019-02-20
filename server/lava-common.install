@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cp -a git/lava/usr/local/lib/python3.7/site-packages/lava_common /usr/local/lib/python3.7/site-packages/
+install -D -p -m0755 share/create_certificate.py /usr/share/lava-common/create_certificate.py
