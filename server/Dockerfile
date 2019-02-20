@@ -1,8 +1,6 @@
 # FIXME local base image name used for testing purpose
 FROM lpe12proto/lava-server-base:alpine
 
-ENV APACHE_LOG_DIR /var/log/apache2
-
 COPY lava-*.install /tmp/
 
 RUN git clone https://git.lavasoftware.org/lava/lava.git /tmp/lava ;\
@@ -18,8 +16,13 @@ RUN git clone https://git.lavasoftware.org/lava/lava.git /tmp/lava ;\
     # Enable apache2 configuration and modules
     sed -i '/LoadModule expires_module/s/^#//g' /etc/apache2/httpd.conf ;\
     echo "IncludeOptional /etc/apache2/sites-available/*.conf" >> /etc/apache2/httpd.conf ;\
+    echo "export APACHE_LOG_DIR=/var/log/apache2" >> /usr/sbin/envvars ;\
     # Create gunicorn3 symlink for convenience
     ln -sf /usr/local/bin/gunicorn /usr/bin/gunicorn3 ;\
+    # Configure supervisord
+    mkdir /etc/supervisor.d ;\
+    echo "[program:apache2]" > /etc/supervisor.d/apache2.ini ;\
+    echo "command=/usr/sbin/apachectl -DFOREGROUND" >> /etc/supervisor.d/apache2.ini ;\
     # List packages and python modules installed
     apk info -vv | sort ;\
     pip freeze ;\
@@ -29,3 +32,5 @@ RUN git clone https://git.lavasoftware.org/lava/lava.git /tmp/lava ;\
 EXPOSE 80 5500 5555 5556
 
 # FIXME start/run the services
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf", "-n"]
