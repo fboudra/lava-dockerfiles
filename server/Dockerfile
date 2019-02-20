@@ -2,6 +2,7 @@
 FROM lpe12proto/lava-server-base:alpine
 
 COPY lava-*.install /tmp/
+COPY overlays/etc/supervisor.d/*.conf /etc/supervisor.d/
 
 RUN git clone https://git.lavasoftware.org/lava/lava.git /tmp/lava ;\
     cd /tmp/lava ;\
@@ -19,12 +20,9 @@ RUN git clone https://git.lavasoftware.org/lava/lava.git /tmp/lava ;\
     echo "export APACHE_LOG_DIR=/var/log/apache2" >> /usr/sbin/envvars ;\
     # Create gunicorn3 symlink for convenience
     ln -sf /usr/local/bin/gunicorn /usr/bin/gunicorn3 ;\
-    # Configure supervisord
+    # Configure supervisord to include config snippet
     echo "[include]" >> /etc/supervisord.conf ;\
     echo "files = /etc/supervisor.d/*.conf" >> /etc/supervisord.conf ;\
-    mkdir /etc/supervisor.d ;\
-    echo "[program:apache2]" > /etc/supervisor.d/apache2.conf ;\
-    echo "command=/usr/sbin/apachectl -DFOREGROUND" >> /etc/supervisor.d/apache2.conf ;\
     # List packages and python modules installed
     apk info -vv | sort ;\
     pip freeze ;\
