@@ -20,9 +20,11 @@ RUN git clone https://git.lavasoftware.org/lava/lava.git /tmp/lava ;\
     # Create gunicorn3 symlink for convenience
     ln -sf /usr/local/bin/gunicorn /usr/bin/gunicorn3 ;\
     # Configure supervisord
+    echo "[include]" >> /etc/supervisord.conf ;\
+    echo "files = /etc/supervisor.d/*.conf" >> /etc/supervisord.conf ;\
     mkdir /etc/supervisor.d ;\
-    echo "[program:apache2]" > /etc/supervisor.d/apache2.ini ;\
-    echo "command=/usr/sbin/apachectl -DFOREGROUND" >> /etc/supervisor.d/apache2.ini ;\
+    echo "[program:apache2]" > /etc/supervisor.d/apache2.conf ;\
+    echo "command=/usr/sbin/apachectl -DFOREGROUND" >> /etc/supervisor.d/apache2.conf ;\
     # List packages and python modules installed
     apk info -vv | sort ;\
     pip freeze ;\
@@ -33,4 +35,4 @@ EXPOSE 80 5500 5555 5556
 
 # FIXME start/run the services
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf", "-n"]
+CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisord.conf", "-n"]

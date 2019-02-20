@@ -12,7 +12,6 @@ ENV RUNTIME_DEPS="\
     apache2-proxy \
     apache2-utils \
     git \
-    supervisor \
     tftp-hpa \
 "
 
@@ -21,6 +20,9 @@ COPY requirements.txt ./
 RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     apk add --no-cache ${RUNTIME_DEPS} ;\
     pip install --no-cache-dir -r requirements.txt ;\
+    # Install supervisord from git using pip
+    pip install --no-cache-dir -e git+https://github.com/Supervisor/supervisor.git#egg=supervisor ;\
+    install -D -p -m0644 /src/supervisor/supervisor/skel/sample.conf /etc/supervisord.conf ;\
     # Cleanup
     apk del --no-cache --purge .build-deps ;\
     rm -rf /var/cache/apk/*
