@@ -8,7 +8,7 @@ ENV BUILD_DEPS="\
 "
 
 ENV RUNTIME_DEPS="\
-    apache2 \
+    apache2-proxy \
     git \
     tftp-hpa \
 "
