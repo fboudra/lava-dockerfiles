@@ -6,6 +6,8 @@ COPY overlays/etc/supervisor.d/*.conf /etc/supervisor.d/
 
 RUN git clone https://git.lavasoftware.org/lava/lava.git /tmp/lava ;\
     cd /tmp/lava ;\
+    # FIXME workaround https://git.lavasoftware.org/lava/lava/merge_requests/411
+    sed -i '/--quiet/d' share/postinst.py
     # FIXME python3 setup.py build
     python3 setup.py install --prefix=/usr/local --root="git/lava" ;\
     python3 setup.py clean -a ;\
