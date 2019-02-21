@@ -3,11 +3,14 @@ FROM lpe12proto/lava-server-base:alpine
 
 COPY lava-*.install /tmp/
 COPY overlays/etc/supervisor.d/*.conf /etc/supervisor.d/
+COPY overlays/etc/lava-server/* /etc/lava-server/
 
 RUN git clone https://git.lavasoftware.org/lava/lava.git /tmp/lava ;\
     cd /tmp/lava ;\
     # FIXME workaround https://git.lavasoftware.org/lava/lava/merge_requests/411
-    sed -i '/--quiet/d' share/postinst.py ;\
+    #       bypass adduser completely and create lavauser user/group ourself
+    awk 'NR==1,/adduser/{sub(/adduser/, "true")} 1' share/postinst.py > share/postinst.py.new ;\
+    mv share/postinst.py.new share/postinst.py ;\
     # FIXME python3 setup.py build
     python3 setup.py install --prefix=/usr/local --root="git/lava" ;\
     python3 setup.py clean -a ;\
@@ -16,6 +19,10 @@ RUN git clone https://git.lavasoftware.org/lava/lava.git /tmp/lava ;\
     # Run shell scripts to install files and create symlinks
     sh -x /tmp/lava-common.install ;\
     sh -x /tmp/lava-server.install ;\
+    # Run post installation scripts
+    addgroup -S lavaserver ;\
+    adduser -h /var/lib/lava-server/home -s /bin/sh -G lavaserver -S lavaserver ;\
+    #python3 /usr/share/lava-server/postinst.py ;\
     # Enable apache2 configuration and modules
     sed -i '/LoadModule expires_module/s/^#//g' /etc/apache2/httpd.conf ;\
     echo "IncludeOptional /etc/apache2/sites-available/*.conf" >> /etc/apache2/httpd.conf ;\
