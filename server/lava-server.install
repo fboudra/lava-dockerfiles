@@ -27,6 +27,8 @@ install -D -p -m0755 share/postinst.py /usr/share/lava-server/postinst.py
 install -d /etc/lava-server/dispatcher-config && cp -a lava_scheduler_app/tests/device-types /etc/lava-server/dispatcher-config/
 install -d /usr/local/lib/python3.7/site-packages/lava && cp -a git/lava/usr/local/lib/python3.7/site-packages/lava/utils /usr/local/lib/python3.7/site-packages/lava/
 install -d /usr/share/lava-server/static
+install -d /var/lib/lava-server/default/media
+install -d /var/lib/lava-server/default/archive/job-output
 install -d /var/log/lava-server
 
 ln -sf /usr/local/lib/python3.7/site-packages/django/contrib/admin/static/admin /usr/share/lava-server/static/admin
