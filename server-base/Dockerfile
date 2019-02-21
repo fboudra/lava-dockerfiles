@@ -12,6 +12,8 @@ ENV RUNTIME_DEPS="\
     apache2-proxy \
     apache2-utils \
     git \
+    libldap \
+    libpq \
     tftp-hpa \
 "
 
