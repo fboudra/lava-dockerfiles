@@ -25,4 +25,4 @@ RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     install -D -p -m0644 /src/supervisor/supervisor/skel/sample.conf /etc/supervisord.conf ;\
     # Cleanup
     apk del --no-cache --purge .build-deps ;\
-    rm -rf /var/cache/apk/*
+    rm -rf /var/cache/apk/* /requirements.txt

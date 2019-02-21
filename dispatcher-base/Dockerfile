@@ -24,4 +24,4 @@ RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     pip install --no-cache-dir -r requirements.txt ;\
     # Cleanup
     apk del --no-cache --purge .build-deps ;\
-    rm -rf /var/cache/apk/*
+    rm -rf /var/cache/apk/* /requirements.txt
