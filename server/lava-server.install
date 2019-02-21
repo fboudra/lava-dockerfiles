@@ -33,4 +33,5 @@ ln -sf /usr/local/lib/python3.7/site-packages/django/contrib/admin/static/admin 
 ln -sf /usr/local/lib/python3.7/site-packages/lava_results_app/static/lava_results_app /usr/share/lava-server/static/lava_results_app
 ln -sf /usr/local/lib/python3.7/site-packages/lava_scheduler_app/static/lava_scheduler_app /usr/share/lava-server/static/lava_scheduler_app
 ln -sf /usr/local/lib/python3.7/site-packages/lava_server/static/lava_server /usr/share/lava-server/static/lava_server
+ln -sf /usr/local/lib/python3.7/site-packages/lava_server/static/lava_server /usr/share/lava-server/static/lava-server
 ln -sf /usr/local/lib/python3.7/site-packages/rest_framework/static/rest_framework /usr/share/lava-server/static/rest_framework
