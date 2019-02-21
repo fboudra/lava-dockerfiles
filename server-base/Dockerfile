@@ -13,7 +13,7 @@ ENV RUNTIME_DEPS="\
     apache2-utils \
     git \
     libldap \
-    libpq \
+    postgresql-client \
     tftp-hpa \
 "
 
