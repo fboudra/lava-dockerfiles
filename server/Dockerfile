@@ -18,6 +18,10 @@ RUN git clone https://git.lavasoftware.org/lava/lava.git /tmp/lava ;\
     sed -i '/LoadModule expires_module/s/^#//g' /etc/apache2/httpd.conf ;\
     echo "IncludeOptional /etc/apache2/sites-available/*.conf" >> /etc/apache2/httpd.conf ;\
     echo "export APACHE_LOG_DIR=/var/log/apache2" >> /usr/sbin/envvars ;\
+    # Uncomment some gunicorn default values
+    sed -i '/LOGLEVEL/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
+    sed -i '/LOGFILE/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
+    sed -i '/WORKERS/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
     # Create gunicorn3 symlink for convenience
     ln -sf /usr/local/bin/gunicorn /usr/bin/gunicorn3 ;\
     # Configure supervisord to include config snippet
