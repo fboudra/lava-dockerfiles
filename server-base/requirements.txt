@@ -24,5 +24,5 @@ PyYAML>=4.2b4
 pyzmq
 requests
 simplejson
-tap
+tap.py
 voluptuous>=0.8.8
