@@ -13,8 +13,8 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     find . -path '*/__pycache__/*' -delete ;\
     find . -type d -name '__pycache__' -delete ;\
     # Run shell scripts to install files and create symlinks
-    sh -x /tmp/lava-common.install ;\
-    sh -x /tmp/lava-server.install ;\
+    sh -ex /tmp/lava-common.install ;\
+    sh -ex /tmp/lava-server.install ;\
     # Create LAVA system user/group
     addgroup -S lavaserver ;\
     adduser -h /var/lib/lava-server/home -s /bin/sh -G lavaserver -S lavaserver ;\
