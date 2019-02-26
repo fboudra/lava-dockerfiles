@@ -8,6 +8,7 @@ ENV BUILD_DEPS="\
 # FIXME uboot-tools (mkimage) is only available on Alpine Edge
 #wget https://ftp.yzu.edu.tw/Linux/alpine/edge/testing/x86_64/uboot-tools-2018.09-r0.apk
 ENV RUNTIME_DEPS="\
+    busybox-extras \
     git \
     lxc \
     lxc-templates \
