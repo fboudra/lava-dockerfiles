@@ -21,7 +21,7 @@ COPY requirements.txt ./
 RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     apk add --no-cache ${RUNTIME_DEPS} ;\
     # FIXME uboot-tools (mkimage) is only available on Alpine Edge
-    wget https://ftp.yzu.edu.tw/Linux/alpine/edge/testing/x86_64/uboot-tools-2018.09-r0.apk ;\
+    wget https://uk.alpinelinux.org/alpine/edge/testing/x86_64/uboot-tools-2018.09-r0.apk ;\
     apk add --no-cache uboot-tools-2018.09-r0.apk ;\
     pip install --no-cache-dir -r requirements.txt ;\
     # Cleanup
