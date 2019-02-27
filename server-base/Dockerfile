@@ -5,7 +5,6 @@ ENV BUILD_DEPS="\
     linux-headers \
     openldap-dev \
     postgresql-dev \
-    unzip \
     yarn \
 "
 
@@ -29,17 +28,14 @@ RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     pip install --no-cache-dir -e git+https://github.com/Supervisor/supervisor.git#egg=supervisor ;\
     install -D -p -m0644 /src/supervisor/supervisor/skel/sample.conf /etc/supervisord.conf ;\
     # Install javascript libraries
-    # Note: jquery-cookie is superseded by js-cookie. With 1.5.1 release being
-    # the last backward compatible version
-    yarn install ;\
+    yarn install --modules-folder /usr/share/javascript ;\
     # Removed IE_VERSION variable due to undefined error on trident browser engine
-    sed -i '/IE_VERSION/d' /node_modules/excanvas.js/excanvas.js ;\
+    sed -i '/IE_VERSION/d' /usr/share/javascript/excanvas.js/excanvas.js ;\
     # Remove excanvas copy in jquery-flot
-    rm -f /node_modules/jquery-flot/excanvas.*
-    # jquery-watermark isn't available on npm registry (last release is Aug 13, 2012)
-    wget -q https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/jquery-watermark/jquery.watermark-3.1.4.zip ;\
-    mkdir -p  node_modules/jquery-watermark ;\
-    unzip jquery.watermark-3.1.4.zip -d node_modules/jquery-watermark/ ;\
+    rm -f /usr/share/javascript/jquery-flot/excanvas.* ;\
+    # Cleanup unwanted javascript libraries dependencies
+    find /usr/share/javascript -type d -maxdepth 1 -mindepth 1 ! -name jquery-typeahead ! -name jquery-flot ! -name jquery ! -name excanvas.js | xargs rm -rf {} ;\
     # Cleanup
+    yarn cache clean ;\
     apk del --no-cache --purge .build-deps ;\
-    rm -rf /var/cache/apk/* /requirements.txt /package.json /*.zip
+    rm -rf /var/cache/apk/* /requirements.txt /package.json
