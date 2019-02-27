@@ -5,6 +5,8 @@ ENV BUILD_DEPS="\
     linux-headers \
     openldap-dev \
     postgresql-dev \
+    unzip \
+    yarn \
 "
 
 ENV RUNTIME_DEPS="\
@@ -18,7 +20,7 @@ ENV RUNTIME_DEPS="\
     tftp-hpa \
 "
 
-COPY requirements.txt ./
+COPY requirements.txt package.json ./
 
 RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     apk add --no-cache ${RUNTIME_DEPS} ;\
@@ -26,6 +28,16 @@ RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     # Install supervisord from git using pip
     pip install --no-cache-dir -e git+https://github.com/Supervisor/supervisor.git#egg=supervisor ;\
     install -D -p -m0644 /src/supervisor/supervisor/skel/sample.conf /etc/supervisord.conf ;\
+    # Install javascript libraries
+    # Note: jquery-cookie is superseded by js-cookie. With 1.5.1 release being
+    # the last backward compatible version
+    yarn install ;\
+    # Removed IE_VERSION variable due to undefined error on trident browser engine
+    sed -i '/IE_VERSION/d' /node_modules/excanvas.js/excanvas.js ;\
+    # jquery-watermark isn't available on npm registry (last release is Aug 13, 2012)
+    wget -q https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/jquery-watermark/jquery.watermark-3.1.4.zip ;\
+    mkdir -p  node_modules/jquery-watermark ;\
+    unzip jquery.watermark-3.1.4.zip -d node_modules/jquery-watermark/ ;\
     # Cleanup
     apk del --no-cache --purge .build-deps ;\
-    rm -rf /var/cache/apk/* /requirements.txt
+    rm -rf /var/cache/apk/* /requirements.txt /package.json /*.zip
