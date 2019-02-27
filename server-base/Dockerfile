@@ -34,6 +34,8 @@ RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     yarn install ;\
     # Removed IE_VERSION variable due to undefined error on trident browser engine
     sed -i '/IE_VERSION/d' /node_modules/excanvas.js/excanvas.js ;\
+    # Remove excanvas copy in jquery-flot
+    rm -f /node_modules/jquery-flot/excanvas.*
     # jquery-watermark isn't available on npm registry (last release is Aug 13, 2012)
     wget -q https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/jquery-watermark/jquery.watermark-3.1.4.zip ;\
     mkdir -p  node_modules/jquery-watermark ;\
