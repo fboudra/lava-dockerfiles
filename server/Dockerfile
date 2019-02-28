@@ -18,8 +18,6 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     # Create LAVA system user/group
     addgroup -S lavaserver ;\
     adduser -h /var/lib/lava-server/home -s /bin/sh -G lavaserver -S lavaserver ;\
-    # Run post installation scripts
-    #python3 /usr/share/lava-server/postinst.py ;\
     # Enable apache2 configuration and modules
     sed -i '/LoadModule expires_module/s/^#//g' /etc/apache2/httpd.conf ;\
     echo "IncludeOptional /etc/apache2/sites-available/*.conf" >> /etc/apache2/httpd.conf ;\
