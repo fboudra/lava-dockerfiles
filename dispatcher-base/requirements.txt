@@ -1,11 +1,11 @@
 configobj
-file-magic
 Jinja2
 netifaces>=0.10.0
 nose
 pexpect>=4.2.0
 pyocd
 pytest
+python-magic
 pytz
 pyudev>=0.21.0
 PyYAML>=4.2b4

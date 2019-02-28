@@ -8,6 +8,7 @@ ENV BUILD_DEPS="\
 ENV RUNTIME_DEPS="\
     busybox-extras \
     git \
+    libmagic \
     lxc \
     lxc-templates \
     qemu-system-aarch64 \

@@ -14,6 +14,7 @@ ENV RUNTIME_DEPS="\
     apache2-utils \
     git \
     libldap \
+    libmagic \
     libzmq \
     postgresql-client \
     tftp-hpa \
