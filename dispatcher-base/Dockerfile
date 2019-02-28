@@ -3,6 +3,7 @@ FROM python:3.7-alpine3.9
 ENV BUILD_DEPS="\
     build-base \
     linux-headers \
+    yaml-dev \
 "
 
 ENV RUNTIME_DEPS="\
@@ -15,6 +16,7 @@ ENV RUNTIME_DEPS="\
     qemu-system-x86_64 \
     ser2net \
     tftp-hpa \
+    yaml \
 "
 
 COPY requirements.txt ./

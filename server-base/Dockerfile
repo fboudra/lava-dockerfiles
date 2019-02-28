@@ -5,6 +5,7 @@ ENV BUILD_DEPS="\
     linux-headers \
     openldap-dev \
     postgresql-dev \
+    yaml-dev \
     yarn \
 "
 
@@ -18,6 +19,7 @@ ENV RUNTIME_DEPS="\
     libzmq \
     postgresql-client \
     tftp-hpa \
+    yaml \
 "
 
 COPY requirements.txt package.json ./

@@ -20,7 +20,7 @@ python-dateutil
 python-magic
 pytz
 pyudev>=0.21.0
-PyYAML>=4.2b4
+PyYAML
 pyzmq
 requests
 simplejson

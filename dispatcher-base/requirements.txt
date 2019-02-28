@@ -8,7 +8,7 @@ pytest
 python-magic
 pytz
 pyudev>=0.21.0
-PyYAML>=4.2b4
+PyYAML
 pyzmq
 requests
 setproctitle>=1.1.8
