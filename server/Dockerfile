@@ -33,10 +33,6 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     # Configure supervisord to include config snippet
     echo "[include]" >> /etc/supervisord.conf ;\
     echo "files = /etc/supervisor.d/*.conf" >> /etc/supervisord.conf ;\
-    # FIXME tftpd-hpa configuration file is hardcoded and expect TFTP_DIRECTORY
-    mkdir -p /etc/default ;\
-    sed -i 's/INTFTPD_PATH/TFTP_DIRECTORY/g' /etc/conf.d/in.tftpd ;\
-    ln -sf /etc/conf.d/in.tftpd /etc/default/tftpd-hpa ;\
     # List packages and python modules installed
     apk info -vv | sort ;\
     pip freeze ;\
