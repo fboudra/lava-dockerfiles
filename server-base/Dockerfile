@@ -17,6 +17,7 @@ ENV RUNTIME_DEPS="\
     libldap \
     libmagic \
     libzmq \
+    make \
     postgresql-client \
     tftp-hpa \
     yaml \
