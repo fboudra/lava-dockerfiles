@@ -23,6 +23,8 @@ pyudev>=0.21.0
 PyYAML
 pyzmq
 requests
+Sphinx
 simplejson
+sphinx-bootstrap-theme
 tap.py
 voluptuous>=0.8.8

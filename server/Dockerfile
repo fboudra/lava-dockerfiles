@@ -8,6 +8,8 @@ COPY overlays/etc/lava-server/* /etc/lava-server/
 RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;\
     cd /tmp/lava ;\
     # FIXME python3 setup.py build
+    make -C doc/v2/ html SPHINXBUILD="/usr/local/bin/sphinx-build" SPHINXOPTS="-j 4 -D today=1538124357"
+    rm -f doc/v2/_build/html/objects.inv
     python3 setup.py install --prefix=/usr/local --root="git/lava" ;\
     python3 setup.py clean -a ;\
     find . -path '*/__pycache__/*' -delete ;\

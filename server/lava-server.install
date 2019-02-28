@@ -29,6 +29,8 @@ install -d /etc/lava-server/dispatcher-config/devices
 install -d /etc/lava-server/dispatcher-config/health-checks
 install -d /etc/lava-server/dispatcher.d
 install -d /usr/local/lib/python3.7/site-packages/lava && cp -a git/lava/usr/local/lib/python3.7/site-packages/lava/utils /usr/local/lib/python3.7/site-packages/lava/
+install -d /usr/share/doc/lava-server-doc/html/v2 && cp -a doc/v2/_build/html/* /usr/share/doc/lava-server-doc/html/v2/
+install -d /usr/share/doc/lava-server-doc/html/v2/examples && cp -a doc/v2/examples/* /usr/share/doc/lava-server-doc/html/v2/examples/
 install -d /usr/share/lava-server/static
 install -d /var/lib/lava-server/default/archive/job-output
 install -d /var/lib/lava-server/default/media
@@ -41,3 +43,4 @@ ln -sf /usr/local/lib/python3.7/site-packages/lava_scheduler_app/static/lava_sch
 ln -sf /usr/local/lib/python3.7/site-packages/lava_server/static/lava_server /usr/share/lava-server/static/lava-server
 ln -sf /usr/local/lib/python3.7/site-packages/lava_server/static/lava_server /usr/share/lava-server/static/lava_server
 ln -sf /usr/local/lib/python3.7/site-packages/rest_framework/static/rest_framework /usr/share/lava-server/static/rest_framework
+ln -sf /usr/share/doc/lava-server-doc/html /usr/share/lava-server/static/docs
