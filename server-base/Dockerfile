@@ -39,6 +39,9 @@ RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     rm -f /usr/share/javascript/jquery-flot/excanvas.* ;\
     # Cleanup unwanted javascript libraries dependencies
     find /usr/share/javascript -type d -maxdepth 1 -mindepth 1 ! -name jquery-typeahead ! -name jquery-flot ! -name jquery ! -name excanvas.js | xargs rm -rf {} ;\
+    # List packages and python modules installed
+    apk info -vv | sort ;\
+    pip freeze ;\
     # Cleanup
     yarn cache clean ;\
     apk del --no-cache --purge .build-deps ;\
