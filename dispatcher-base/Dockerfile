@@ -25,8 +25,9 @@ ENV RUNTIME_DEPS="\
 
 COPY requirements.txt ./
 
-RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
-    echo "@testing http://uk.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories ;\
+RUN echo "@testing http://uk.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories ;\
+    apk update ;\
+    apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     apk add --no-cache ${RUNTIME_DEPS} ;\
     # FIXME libguestfs python 3 bindings built using python 3.7
     wget -q http://people.linaro.org/~fathi.boudra/alpine/fabo/x86_64/py37-libguestfs-1.40.2-r0.apk ;\

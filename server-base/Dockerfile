@@ -25,7 +25,8 @@ ENV RUNTIME_DEPS="\
 
 COPY requirements.txt package.json ./
 
-RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
+RUN apk update ;\
+    apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     apk add --no-cache ${RUNTIME_DEPS} ;\
     pip install --no-cache-dir -r requirements.txt ;\
     # Install supervisord from git using pip
