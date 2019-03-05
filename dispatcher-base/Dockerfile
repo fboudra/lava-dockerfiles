@@ -28,6 +28,9 @@ COPY requirements.txt ./
 RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     echo "@testing http://uk.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories ;\
     apk add --no-cache ${RUNTIME_DEPS} ;\
+    # FIXME libguestfs python 3 bindings built using python 3.7
+    wget -q http://people.linaro.org/~fathi.boudra/alpine/fabo/x86_64/py37-libguestfs-1.40.2-r0.apk ;\
+    apk add --no-cache --allow-untrusted py37-libguestfs-1.40.2-r0.apk ;\
     pip install --no-cache-dir -r requirements.txt ;\
     # Install supervisord from git using pip
     pip install --no-cache-dir -e git+https://github.com/Supervisor/supervisor.git#egg=supervisor ;\
@@ -37,4 +40,4 @@ RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     pip freeze ;\
     # Cleanup
     apk del --no-cache --purge .build-deps ;\
-    rm -rf /var/cache/apk/* /requirements.txt
+    rm -rf /var/cache/apk/* /requirements.txt /*.apk
