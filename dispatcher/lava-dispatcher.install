@@ -1,2 +1,27 @@
 #!/bin/sh
 
+cp -a git/lava/usr/local/bin/lava-run /usr/bin
+cp -a git/lava/usr/local/bin/lava-slave /usr/bin
+cp -a git/lava/usr/local/lib/python3.7/site-packages/lava_dispatcher /usr/local/lib/python3.7/site-packages/
+
+install -D -p -m0644 debian/lava-dispatcher.conf /usr/share/lava-dispatcher/lava-dispatcher.conf
+install -D -p -m0644 etc/dispatcher.yaml /usr/share/lava-dispatcher/dispatcher.yaml
+install -D -p -m0644 etc/lava-dispatcher-nfs.exports /etc/exports.d/lava-dispatcher-nfs.exports
+install -D -p -m0644 etc/lava-modules.conf /etc/modprobe.d/lava-modules.conf
+install -D -p -m0644 etc/lava-slave /usr/share/lava-dispatcher/lava-slave
+#install -D -p -m0644 etc/lava-slave.service /usr/share/lava-dispatcher/lava-slave.service
+install -D -p -m0644 etc/logrotate.d/lava-slave-log /etc/logrotate.d/lava-slave-log
+install -D -p -m0644 etc/tftpd-hpa /usr/share/lava-dispatcher/tftpd-hpa
+#install -D -p -m0644 etc/udev/override.conf /etc/systemd/system/systemd-udevd.service.d/override.conf
+install -D -p -m0644 share/apache2/lava-dispatcher.conf /usr/share/lava-dispatcher/apache2/lava-dispatcher.conf
+
+install -D -p -m0755 share/lava_lxc_device_add.py /usr/share/lava-dispatcher/lava_lxc_device_add.py
+
+install -d /etc/lava-dispatcher/device-types
+install -d /etc/lava-dispatcher/devices
+install -d /var/lib/lava/dispatcher/cache
+install -d /var/lib/lava/dispatcher/results
+install -d /var/lib/lava/dispatcher/tmp
+install -d /var/log/lava-dispatcher
+
+ln -sf /usr/share/lava-common/create_certificate.py /usr/share/lava-dispatcher/create_certificate.py
