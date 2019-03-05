@@ -9,12 +9,14 @@ ENV BUILD_DEPS="\
 # FIXME uboot-tools (mkimage) and libguestfs are only available on Alpine Edge
 ENV RUNTIME_DEPS="\
     busybox-extras \
+    eudev \
     git \
     libguestfs@testing \
     libmagic \
     lxc \
     lxc-templates \
     nfs-utils \
+    openssh-client \
     qemu-system-aarch64 \
     qemu-system-x86_64 \
     ser2net \
