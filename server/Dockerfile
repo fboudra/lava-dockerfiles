@@ -3,7 +3,7 @@ FROM lpe12proto/lava-server-base:alpine
 
 COPY lava-*.install /tmp/
 COPY overlays/etc/supervisor.d/*.conf /etc/supervisor.d/
-COPY overlays/etc/lava-server/* /etc/lava-server/
+#COPY overlays/etc/lava-server/* /etc/lava-server/
 
 RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;\
     cd /tmp/lava ;\
