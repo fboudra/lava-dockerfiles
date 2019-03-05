@@ -12,6 +12,7 @@ ENV RUNTIME_DEPS="\
     libmagic \
     lxc \
     lxc-templates \
+    nfs-utils \
     qemu-system-aarch64 \
     qemu-system-x86_64 \
     ser2net \
