@@ -29,6 +29,9 @@ RUN apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     wget -q http://uk.alpinelinux.org/alpine/edge/testing/x86_64/libguestfs-1.40.2-r0.apk ;\
     apk add --no-cache uboot-tools-2018.09-r0.apk libguestfs-1.40.2-r0.apk ;\
     pip install --no-cache-dir -r requirements.txt ;\
+    # Install supervisord from git using pip
+    pip install --no-cache-dir -e git+https://github.com/Supervisor/supervisor.git#egg=supervisor ;\
+    install -D -p -m0644 /src/supervisor/supervisor/skel/sample.conf /etc/supervisord.conf ;\
     # List packages and python modules installed
     apk info -vv | sort ;\
     pip freeze ;\
