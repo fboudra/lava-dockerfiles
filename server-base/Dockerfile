@@ -29,9 +29,6 @@ RUN apk update ;\
     apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     apk add --no-cache ${RUNTIME_DEPS} ;\
     pip install --no-cache-dir -r requirements.txt ;\
-    # Install supervisord from git using pip
-    pip install --no-cache-dir -e git+https://github.com/Supervisor/supervisor.git#egg=supervisor ;\
-    install -D -p -m0644 /src/supervisor/supervisor/skel/sample.conf /etc/supervisord.conf ;\
     # Install javascript libraries
     yarn install --modules-folder /usr/share/javascript ;\
     # Removed IE_VERSION variable due to undefined error on trident browser engine

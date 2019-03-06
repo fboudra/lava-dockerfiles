@@ -2,8 +2,6 @@
 FROM lpe12proto/lava-server-base:alpine
 
 COPY lava-*.install /tmp/
-COPY overlays/etc/supervisor.d/*.conf /etc/supervisor.d/
-#COPY overlays/etc/lava-server/* /etc/lava-server/
 
 RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;\
     cd /tmp/lava ;\
@@ -31,9 +29,6 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     sed -i '/WORKERS/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
     # Create gunicorn3 symlink for convenience
     ln -sf /usr/local/bin/gunicorn /usr/bin/gunicorn3 ;\
-    # Configure supervisord to include config snippet
-    echo "[include]" >> /etc/supervisord.conf ;\
-    echo "files = /etc/supervisor.d/*.conf" >> /etc/supervisord.conf ;\
     # List packages and python modules installed
     apk info -vv | sort ;\
     pip freeze ;\
@@ -43,5 +38,3 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
 EXPOSE 80 5500 5555 5556
 
 # FIXME start/run the services
-
-CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisord.conf", "-n"]
