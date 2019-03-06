@@ -28,8 +28,6 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     sed -i '/LOGLEVEL/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
     sed -i '/LOGFILE/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
     sed -i '/WORKERS/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
-    # Create gunicorn3 symlink for convenience
-    ln -sf /usr/local/bin/gunicorn /usr/bin/gunicorn3 ;\
     # Create users entrypoint directory
     mkdir /root/entrypoint.d ;\
     # List packages and python modules installed

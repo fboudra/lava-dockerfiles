@@ -37,6 +37,10 @@ RUN apk update ;\
     rm -f /usr/share/javascript/jquery-flot/excanvas.* ;\
     # Cleanup unwanted javascript libraries dependencies
     find /usr/share/javascript -type d -maxdepth 1 -mindepth 1 ! -name jquery-typeahead ! -name jquery-flot ! -name jquery ! -name excanvas.js | xargs rm -rf {} ;\
+    # Create symlinks
+    ln -sf /usr/local/bin/gunicorn /usr/bin/gunicorn3 ;\
+    ln -sf /usr/local/bin/python3 /usr/bin/python3 ;\
+    ln -sf /usr/sbin/apachectl /usr/sbin/apache2ctl ;\
     # List packages and python modules installed
     apk info -vv | sort ;\
     pip freeze ;\
