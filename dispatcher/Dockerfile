@@ -2,6 +2,7 @@
 FROM lpe12proto/lava-dispatcher-base:alpine
 
 COPY lava-*.install /tmp/
+COPY entrypoint.sh /root/
 
 RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;\
     cd /tmp/lava ;\
@@ -14,10 +15,12 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     # Run shell scripts to install files and create symlinks
     sh -ex /tmp/lava-common.install ;\
     sh -ex /tmp/lava-dispatcher.install ;\
+    # Create users entrypoint directory
+    mkdir /root/entrypoint.d ;\
     # List packages and python modules installed
     apk info -vv | sort ;\
     pip freeze ;\
     # Cleanup
     rm -rf /tmp/lava-*.install /tmp/lava/
 
-# FIXME start/run the services
+ENTRYPOINT ["/root/entrypoint.sh"]

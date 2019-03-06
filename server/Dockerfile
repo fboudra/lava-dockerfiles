@@ -2,6 +2,7 @@
 FROM lpe12proto/lava-server-base:alpine
 
 COPY lava-*.install /tmp/
+COPY entrypoint.sh /root/
 
 RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;\
     cd /tmp/lava ;\
@@ -29,6 +30,8 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     sed -i '/WORKERS/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
     # Create gunicorn3 symlink for convenience
     ln -sf /usr/local/bin/gunicorn /usr/bin/gunicorn3 ;\
+    # Create users entrypoint directory
+    mkdir /root/entrypoint.d ;\
     # List packages and python modules installed
     apk info -vv | sort ;\
     pip freeze ;\
@@ -37,4 +40,4 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
 
 EXPOSE 80 5500 5555 5556
 
-# FIXME start/run the services
+ENTRYPOINT ["/root/entrypoint.sh"]
