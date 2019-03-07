@@ -21,13 +21,14 @@ ENV RUNTIME_DEPS="\
     qemu-system-x86_64 \
     ser2net \
     tftp-hpa \
-    uboot-tools@testing \
+    uboot-tools@community \
     yaml \
 "
 
 COPY requirements.txt ./
 
 RUN echo "@testing http://uk.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories ;\
+    echo "@community http://uk.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories ;\
     apk update ;\
     apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     apk add --no-cache ${RUNTIME_DEPS} ;\
