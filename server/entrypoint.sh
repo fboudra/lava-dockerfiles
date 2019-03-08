@@ -217,9 +217,6 @@ then
     wait_postgresql
     echo "done"
     echo
-    # FIXME postinst script is required to fix permissions
-    echo "RUNNING: python3 /usr/share/lava-server/postinst.py"
-    python3 /usr/share/lava-server/postinst.py
     if [ "$LAVA_DB_MIGRATE" = "yes" ]
     then
         echo "Applying migrations"
