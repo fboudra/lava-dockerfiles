@@ -14,12 +14,12 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     python3 setup.py clean -a ;\
     find . -path '*/__pycache__/*' -delete ;\
     find . -type d -name '__pycache__' -delete ;\
-    # Run shell scripts to install files and create symlinks
-    sh -ex /tmp/lava-common.install ;\
-    sh -ex /tmp/lava-server.install ;\
     # Create LAVA system user/group
     addgroup -S lavaserver ;\
     adduser -h /var/lib/lava-server/home -s /bin/sh -G lavaserver -S lavaserver ;\
+    # Run shell scripts to install files and create symlinks
+    sh -ex /tmp/lava-common.install ;\
+    sh -ex /tmp/lava-server.install ;\
     # Enable apache2 configuration and modules
     sed -i '/LoadModule expires_module/s/^#//g' /etc/apache2/httpd.conf ;\
     echo "IncludeOptional /etc/apache2/sites-available/*.conf" >> /etc/apache2/httpd.conf ;\
