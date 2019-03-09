@@ -20,6 +20,7 @@ ENV RUNTIME_DEPS="\
     qemu-system-aarch64 \
     qemu-system-x86_64 \
     ser2net \
+    supermin@testing \
     tftp-hpa \
     uboot-tools@community \
     yaml \
