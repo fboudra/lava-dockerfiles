@@ -3,6 +3,7 @@ FROM lpe12proto/lava-dispatcher-base:alpine
 
 COPY lava-*.install /tmp/
 COPY entrypoint.sh /root/
+COPY overlays/etc/* /etc/
 
 RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;\
     cd /tmp/lava ;\
