@@ -11,6 +11,7 @@ ENV RUNTIME_DEPS="\
     busybox-extras \
     eudev \
     git \
+    iproute2 \
     libguestfs@testing \
     libmagic \
     lxc \
@@ -23,6 +24,7 @@ ENV RUNTIME_DEPS="\
     supermin@testing \
     tftp-hpa \
     uboot-tools@community \
+    xz \
     yaml \
 "
 
