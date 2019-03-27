@@ -34,7 +34,7 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     apk info -vv | sort ;\
     pip freeze ;\
     # Cleanup
-    rm -rf /tmp/lava-*.install /tmp/lava/
+    rm -rf /tmp/*
 
 EXPOSE 80 5500 5555 5556
 
