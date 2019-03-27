@@ -29,7 +29,7 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     sed -i '/LOGFILE/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
     sed -i '/WORKERS/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
     # Create users entrypoint directory
-    mkdir /root/entrypoint.d ;\
+    mkdir -p /root/entrypoint.d ;\
     # List packages and python modules installed
     apk info -vv | sort ;\
     pip freeze ;\
