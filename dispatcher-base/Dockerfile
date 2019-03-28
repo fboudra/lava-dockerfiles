@@ -1,49 +1,42 @@
-FROM python:3.7-alpine3.9
+FROM debian:stretch-slim
+
+ENV DEBIAN_FRONTEND noninteractive
 
 ENV BUILD_DEPS="\
-    build-base \
-    linux-headers \
-    yaml-dev \
+    gcc \
+    libc6-dev \
+    libmagic-dev \
+    libyaml-dev \
+    python3-dev \
 "
 
-# FIXME uboot-tools (mkimage) and libguestfs are only available on Alpine Edge
 ENV RUNTIME_DEPS="\
-    busybox-extras \
-    eudev \
+    ca-certificates \
     git \
     iproute2 \
-    libmagic \
+    libguestfs-tools \
     lxc \
-    lxc-templates \
-    nfs-utils \
+    nfs-kernel-server \
     openssh-client \
-    qemu-system-aarch64 \
-    qemu-system-x86_64 \
+    qemu-system-arm \
+    qemu-system-x86 \
     ser2net \
-    supermin@testing \
-    tftp-hpa \
-    uboot-tools@community \
-    xz \
-    yaml \
+    telnet \
+    tftpd-hpa \
+    u-boot-tools \
+    wget \
+    xz-utils \
 "
 
 COPY requirements.txt /tmp/
 
-RUN echo "@testing http://uk.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories ;\
-    echo "@community http://uk.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories ;\
-    apk update ;\
-    apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
-    apk add --no-cache ${RUNTIME_DEPS} ;\
-    # FIXME libguestfs python 3 bindings built using python 3.7
-    wget -q http://people.linaro.org/~fathi.boudra/alpine/fabo/x86_64/libguestfs-1.40.2-r0.apk ;\
-    wget -q http://people.linaro.org/~fathi.boudra/alpine/fabo/x86_64/py37-libguestfs-1.40.2-r0.apk ;\
-    apk add --no-cache --allow-untrusted *.apk ;\
+RUN apt update -q=2 ;\
+    apt install -q=2 --yes --no-install-recommends ${RUNTIME_DEPS} ${BUILD_DEPS} ;\
+    wget -q https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py ;\
+    python3 /tmp/get-pip.py ;\
     pip install --no-cache-dir -r /tmp/requirements.txt ;\
-    # Create symlink
-    ln -sf /usr/local/bin/python3 /usr/bin/python3 ;\
-    # List packages and python modules installed
-    apk info -vv | sort ;\
+    # List python modules installed
     pip freeze ;\
     # Cleanup
-    apk del --no-cache --purge .build-deps ;\
-    rm -rf /var/cache/apk/* /tmp/* /*.apk
+    apt-get clean ;\
+    rm -rf /var/lib/apt/lists/* /tmp/*

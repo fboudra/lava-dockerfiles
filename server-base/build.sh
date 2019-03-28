@@ -4,5 +4,5 @@ set -e
 
 export LANG=C
 
-image=lpe12proto/lava-$(basename ${PWD}):alpine
+image=lpe12proto/lava-$(basename ${PWD}):debian
 docker build --no-cache --pull --tag=$image .

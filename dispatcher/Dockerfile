@@ -1,5 +1,5 @@
 # FIXME local base image name used for testing purpose
-FROM lpe12proto/lava-dispatcher-base:alpine
+FROM lpe12proto/lava-dispatcher-base:debian
 
 COPY lava-*.install /tmp/
 COPY overlays/root/*.sh /root/
@@ -18,8 +18,7 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     sh -ex /tmp/lava-dispatcher.install ;\
     # Create users entrypoint directory
     mkdir -p /root/entrypoint.d ;\
-    # List packages and python modules installed
-    apk info -vv | sort ;\
+    # List python modules installed
     pip freeze ;\
     # Cleanup
     rm -rf /tmp/*

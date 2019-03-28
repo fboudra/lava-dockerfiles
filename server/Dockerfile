@@ -1,5 +1,5 @@
 # FIXME local base image name used for testing purpose
-FROM lpe12proto/lava-server-base:alpine
+FROM lpe12proto/lava-server-base:debian
 
 COPY lava-*.install /tmp/
 COPY entrypoint.sh /root/
@@ -15,23 +15,22 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     find . -path '*/__pycache__/*' -delete ;\
     find . -type d -name '__pycache__' -delete ;\
     # Create LAVA system user/group
-    addgroup -S lavaserver ;\
-    adduser -h /var/lib/lava-server/home -s /bin/sh -G lavaserver -S lavaserver ;\
+    adduser --quiet --system --group --home /var/lib/lava-server/home lavaserver --shell /bin/sh ;\
     # Run shell scripts to install files and create symlinks
     sh -ex /tmp/lava-common.install ;\
     sh -ex /tmp/lava-server.install ;\
     # Enable apache2 configuration and modules
-    sed -i '/LoadModule expires_module/s/^#//g' /etc/apache2/httpd.conf ;\
-    echo "IncludeOptional /etc/apache2/sites-available/*.conf" >> /etc/apache2/httpd.conf ;\
-    echo "export APACHE_LOG_DIR=/var/log/apache2" >> /usr/sbin/envvars ;\
+    for module in proxy proxy_http expires headers ;\
+    do (cd /etc/apache2/mods-enabled; ln -sf ../mods-available/${module}.load) ;\
+    done ;\
+    (cd /etc/apache2/sites-enabled; rm -f *.conf; ln -sf ../sites-available/lava-server.conf) ;\
     # Uncomment some gunicorn default values
     sed -i '/LOGLEVEL/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
     sed -i '/LOGFILE/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
     sed -i '/WORKERS/s/^# //g' /etc/lava-server/lava-server-gunicorn ;\
     # Create users entrypoint directory
     mkdir -p /root/entrypoint.d ;\
-    # List packages and python modules installed
-    apk info -vv | sort ;\
+    # List python modules installed
     pip freeze ;\
     # Cleanup
     rm -rf /tmp/*

@@ -1,40 +1,40 @@
-FROM python:3.7-alpine3.9
+FROM debian:stretch-slim
+
+ENV DEBIAN_FRONTEND noninteractive
 
 ENV BUILD_DEPS="\
-    build-base \
-    linux-headers \
-    openldap-dev \
-    postgresql-dev \
-    yaml-dev \
+    gcc \
+    libldap2-dev \
+    libmagic-dev \
+    libpq-dev \
+    libsasl2-dev \
+    libyaml-dev \
+    libzmq3-dev \
+    python3-dev \
 "
 
 ENV RUNTIME_DEPS="\
-    apache2-ctl \
-    apache2-proxy \
-    apache2-utils \
+    apache2 \
+    ca-certificates \
     git \
-    libldap \
-    libmagic \
-    libzmq \
     make \
     postgresql-client \
-    tftp-hpa \
-    yaml \
+    tftpd-hpa \
+    wget \
 "
 
 COPY requirements.txt /tmp/
 
-RUN apk update ;\
-    apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
-    apk add --no-cache ${RUNTIME_DEPS} ;\
+RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 ;\
+    apt update -q=2 ;\
+    apt install -q=2 --yes --no-install-recommends ${RUNTIME_DEPS} ${BUILD_DEPS} ;\
+    wget -q https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py ;\
+    python3 /tmp/get-pip.py ;\
     pip install --no-cache-dir -r /tmp/requirements.txt ;\
     # Create symlinks
     ln -sf /usr/local/bin/gunicorn /usr/bin/gunicorn3 ;\
-    ln -sf /usr/local/bin/python3 /usr/bin/python3 ;\
-    ln -sf /usr/sbin/apachectl /usr/sbin/apache2ctl ;\
-    # List packages and python modules installed
-    apk info -vv | sort ;\
+    # List python modules installed
     pip freeze ;\
     # Cleanup
-    apk del --no-cache --purge .build-deps ;\
-    rm -rf /var/cache/apk/* /tmp/*
+    apt-get clean ;\
+    rm -rf /var/lib/apt/lists/* /tmp/*
