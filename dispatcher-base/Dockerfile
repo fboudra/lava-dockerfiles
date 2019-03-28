@@ -12,7 +12,6 @@ ENV RUNTIME_DEPS="\
     eudev \
     git \
     iproute2 \
-    libguestfs@testing \
     libmagic \
     lxc \
     lxc-templates \
@@ -36,8 +35,9 @@ RUN echo "@testing http://uk.alpinelinux.org/alpine/edge/testing" >> /etc/apk/re
     apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     apk add --no-cache ${RUNTIME_DEPS} ;\
     # FIXME libguestfs python 3 bindings built using python 3.7
+    wget -q http://people.linaro.org/~fathi.boudra/alpine/fabo/x86_64/libguestfs-1.40.2-r0.apk ;\
     wget -q http://people.linaro.org/~fathi.boudra/alpine/fabo/x86_64/py37-libguestfs-1.40.2-r0.apk ;\
-    apk add --no-cache --allow-untrusted py37-libguestfs-1.40.2-r0.apk ;\
+    apk add --no-cache --allow-untrusted *.apk ;\
     pip install --no-cache-dir -r requirements.txt ;\
     # Create symlink
     ln -sf /usr/local/bin/python3 /usr/bin/python3 ;\
