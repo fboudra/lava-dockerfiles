@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "excanvas.js": "1.0.0",
-    "jquery": "^3.3.1",
-    "jquery-flot": "0.8.3",
-    "jquery-typeahead": "^2.10.6"
-  }
-}
