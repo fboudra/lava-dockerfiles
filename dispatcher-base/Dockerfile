@@ -18,6 +18,7 @@ ENV RUNTIME_DEPS="\
     lxc \
     nfs-kernel-server \
     openssh-client \
+    python3-guestfs \
     qemu-system-arm \
     qemu-system-x86 \
     ser2net \
