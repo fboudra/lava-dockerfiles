@@ -17,7 +17,7 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     sh -ex /tmp/lava-common.install ;\
     sh -ex /tmp/lava-dispatcher.install ;\
     # Create users entrypoint directory
-    mkdir /root/entrypoint.d ;\
+    mkdir -p /root/entrypoint.d ;\
     # List packages and python modules installed
     apk info -vv | sort ;\
     pip freeze ;\
