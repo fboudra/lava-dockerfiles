@@ -1,5 +1,7 @@
 #!/bin/sh
 
-cp -a git/lava/usr/local/lib/python3.7/site-packages/lava_common /usr/local/lib/python3.7/site-packages/
+SITEPACKAGES=$(python3 -c 'import site; print(site.getsitepackages()[0])')
+
+cp -a git/lava${SITEPACKAGES}/lava_common ${SITEPACKAGES}/
 install -D -p -m0755 share/create_certificate.py /usr/share/lava-common/create_certificate.py
 install -D -p -m0755 share/lava-schema.py /usr/share/lava-common/lava-schema.py

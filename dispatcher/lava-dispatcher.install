@@ -1,8 +1,10 @@
 #!/bin/sh
 
+SITEPACKAGES=$(python3 -c 'import site; print(site.getsitepackages()[0])')
+
 cp -a git/lava/usr/local/bin/lava-run /usr/bin
 cp -a git/lava/usr/local/bin/lava-slave /usr/bin
-cp -a git/lava/usr/local/lib/python3.7/site-packages/lava_dispatcher /usr/local/lib/python3.7/site-packages/
+cp -a git/lava${SITEPACKAGES}/lava_dispatcher ${SITEPACKAGES}/
 
 install -D -p -m0644 etc/dispatcher.yaml /usr/share/lava-dispatcher/dispatcher.yaml
 install -D -p -m0644 etc/lava-dispatcher-nfs.exports /etc/exports.d/lava-dispatcher-nfs.exports

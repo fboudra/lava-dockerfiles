@@ -1,11 +1,13 @@
 #!/bin/sh
 
-cp -a git/lava/usr/local/lib/python3.7/site-packages/dashboard_app /usr/local/lib/python3.7/site-packages/
-cp -a git/lava/usr/local/lib/python3.7/site-packages/lava_rest_app /usr/local/lib/python3.7/site-packages/
-cp -a git/lava/usr/local/lib/python3.7/site-packages/lava_results_app /usr/local/lib/python3.7/site-packages/
-cp -a git/lava/usr/local/lib/python3.7/site-packages/lava_scheduler_app /usr/local/lib/python3.7/site-packages/
-cp -a git/lava/usr/local/lib/python3.7/site-packages/lava_server /usr/local/lib/python3.7/site-packages/
-cp -a git/lava/usr/local/lib/python3.7/site-packages/linaro_django_xmlrpc /usr/local/lib/python3.7/site-packages/
+SITEPACKAGES=$(python3 -c 'import site; print(site.getsitepackages()[0])')
+
+cp -a git/lava${SITEPACKAGES}/dashboard_app ${SITEPACKAGES}/
+cp -a git/lava${SITEPACKAGES}/lava_rest_app ${SITEPACKAGES}/
+cp -a git/lava${SITEPACKAGES}/lava_results_app ${SITEPACKAGES}/
+cp -a git/lava${SITEPACKAGES}/lava_scheduler_app ${SITEPACKAGES}/
+cp -a git/lava${SITEPACKAGES}/lava_server ${SITEPACKAGES}/
+cp -a git/lava${SITEPACKAGES}/linaro_django_xmlrpc ${SITEPACKAGES}/
 
 install -D -p -m0644 etc/env.yaml /etc/lava-server/env.yaml
 install -D -p -m0644 etc/instance.conf.template /usr/share/lava-server/instance.conf.template
@@ -21,7 +23,7 @@ install -D -p -m0644 etc/logrotate.d/lava-publisher-log /etc/logrotate.d/lava-pu
 install -D -p -m0644 etc/logrotate.d/lava-server-gunicorn-log /etc/logrotate.d/lava-server-gunicorn-log
 install -D -p -m0644 etc/settings.conf /etc/lava-server/settings.conf
 
-install -D -p -m0755 git/lava/usr/local/lib/python3.7/site-packages/lava_server/manage.py /usr/bin/lava-server
+install -D -p -m0755 git/lava${SITEPACKAGES}/lava_server/manage.py /usr/bin/lava-server
 install -D -p -m0755 share/postinst.py /usr/share/lava-server/postinst.py
 
 install -d -g lavaserver -o lavaserver /etc/lava-server/dispatcher-config && cp -a lava_scheduler_app/tests/device-types /etc/lava-server/dispatcher-config/ && chown -R lavaserver:lavaserver /etc/lava-server/dispatcher-config
@@ -32,15 +34,15 @@ install -d -g lavaserver -o lavaserver /var/lib/lava-server/default/archive/job-
 install -d -g lavaserver -o lavaserver /var/lib/lava-server/default/media/job-output && chown -R lavaserver:lavaserver /var/lib/lava-server/default
 install -d -g lavaserver -o lavaserver /var/lib/lava-server/home
 install -d -m2755 -g adm -o lavaserver /var/log/lava-server && touch /var/log/lava-server/django.log && chown lavaserver:adm /var/log/lava-server/django.log
-install -d /usr/local/lib/python3.7/site-packages/lava && cp -a git/lava/usr/local/lib/python3.7/site-packages/lava/utils /usr/local/lib/python3.7/site-packages/lava/
+install -d ${SITEPACKAGES}/lava && cp -a git/lava${SITEPACKAGES}/lava/utils ${SITEPACKAGES}/lava/
 install -d /usr/share/doc/lava-server-doc/html/v2 && cp -a doc/v2/_build/html/* /usr/share/doc/lava-server-doc/html/v2/
 install -d /usr/share/doc/lava-server-doc/html/v2/examples && cp -a doc/v2/examples/* /usr/share/doc/lava-server-doc/html/v2/examples/
 install -d /usr/share/lava-server/static
 
-ln -sf /usr/local/lib/python3.7/site-packages/django/contrib/admin/static/admin /usr/share/lava-server/static/admin
-ln -sf /usr/local/lib/python3.7/site-packages/lava_results_app/static/lava_results_app /usr/share/lava-server/static/lava_results_app
-ln -sf /usr/local/lib/python3.7/site-packages/lava_scheduler_app/static/lava_scheduler_app /usr/share/lava-server/static/lava_scheduler_app
-ln -sf /usr/local/lib/python3.7/site-packages/lava_server/static/lava_server /usr/share/lava-server/static/lava-server
-ln -sf /usr/local/lib/python3.7/site-packages/lava_server/static/lava_server /usr/share/lava-server/static/lava_server
-ln -sf /usr/local/lib/python3.7/site-packages/rest_framework/static/rest_framework /usr/share/lava-server/static/rest_framework
+ln -sf ${SITEPACKAGES}/django/contrib/admin/static/admin /usr/share/lava-server/static/admin
+ln -sf ${SITEPACKAGES}/lava_results_app/static/lava_results_app /usr/share/lava-server/static/lava_results_app
+ln -sf ${SITEPACKAGES}/lava_scheduler_app/static/lava_scheduler_app /usr/share/lava-server/static/lava_scheduler_app
+ln -sf ${SITEPACKAGES}/lava_server/static/lava_server /usr/share/lava-server/static/lava-server
+ln -sf ${SITEPACKAGES}/lava_server/static/lava_server /usr/share/lava-server/static/lava_server
+ln -sf ${SITEPACKAGES}/rest_framework/static/rest_framework /usr/share/lava-server/static/rest_framework
 ln -sf /usr/share/doc/lava-server-doc/html /usr/share/lava-server/static/docs
