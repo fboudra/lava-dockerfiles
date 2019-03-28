@@ -22,6 +22,6 @@ RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;
     apk info -vv | sort ;\
     pip freeze ;\
     # Cleanup
-    rm -rf /tmp/lava-*.install /tmp/lava/
+    rm -rf /tmp/*
 
 ENTRYPOINT ["/root/entrypoint.sh"]

@@ -22,12 +22,12 @@ ENV RUNTIME_DEPS="\
     yaml \
 "
 
-COPY requirements.txt ./
+COPY requirements.txt /tmp/
 
 RUN apk update ;\
     apk add --no-cache --virtual .build-deps ${BUILD_DEPS} ;\
     apk add --no-cache ${RUNTIME_DEPS} ;\
-    pip install --no-cache-dir -r requirements.txt ;\
+    pip install --no-cache-dir -r /tmp/requirements.txt ;\
     # Create symlinks
     ln -sf /usr/local/bin/gunicorn /usr/bin/gunicorn3 ;\
     ln -sf /usr/local/bin/python3 /usr/bin/python3 ;\
@@ -37,4 +37,4 @@ RUN apk update ;\
     pip freeze ;\
     # Cleanup
     apk del --no-cache --purge .build-deps ;\
-    rm -rf /var/cache/apk/* /requirements.txt
+    rm -rf /var/cache/apk/* /tmp/*

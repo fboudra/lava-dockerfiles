@@ -27,7 +27,7 @@ ENV RUNTIME_DEPS="\
     yaml \
 "
 
-COPY requirements.txt ./
+COPY requirements.txt /tmp/
 
 RUN echo "@testing http://uk.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories ;\
     echo "@community http://uk.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories ;\
@@ -38,7 +38,7 @@ RUN echo "@testing http://uk.alpinelinux.org/alpine/edge/testing" >> /etc/apk/re
     wget -q http://people.linaro.org/~fathi.boudra/alpine/fabo/x86_64/libguestfs-1.40.2-r0.apk ;\
     wget -q http://people.linaro.org/~fathi.boudra/alpine/fabo/x86_64/py37-libguestfs-1.40.2-r0.apk ;\
     apk add --no-cache --allow-untrusted *.apk ;\
-    pip install --no-cache-dir -r requirements.txt ;\
+    pip install --no-cache-dir -r /tmp/requirements.txt ;\
     # Create symlink
     ln -sf /usr/local/bin/python3 /usr/bin/python3 ;\
     # List packages and python modules installed
@@ -46,4 +46,4 @@ RUN echo "@testing http://uk.alpinelinux.org/alpine/edge/testing" >> /etc/apk/re
     pip freeze ;\
     # Cleanup
     apk del --no-cache --purge .build-deps ;\
-    rm -rf /var/cache/apk/* /requirements.txt /*.apk
+    rm -rf /var/cache/apk/* /tmp/* /*.apk
