@@ -37,12 +37,6 @@ RUN apt update -q=2 ;\
     wget -q https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py ;\
     python3 /tmp/get-pip.py ;\
     pip install --no-cache-dir -r /tmp/requirements.txt ;\
-    # FIXME https://git.lavasoftware.org/lava/lava/issues/262
-    wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash ;\
-    export NVM_DIR="$HOME/.nvm" ;\
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" ;\
-    nvm install v10.15.3 ;\
-    npm install terser -g ;\
     # List python modules installed
     pip freeze ;\
     # Cleanup
