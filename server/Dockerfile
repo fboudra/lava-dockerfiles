@@ -4,12 +4,15 @@ FROM lpe12proto/lava-server-base:debian
 COPY lava-*.install /tmp/
 COPY entrypoint.sh /root/
 
-RUN git clone -b postinst https://git.lavasoftware.org/fabo/lava.git /tmp/lava ;\
+RUN git clone -b master https://git.lavasoftware.org/lava/lava.git /tmp/lava ;\
     cd /tmp/lava ;\
-    # FIXME python3 setup.py build
+    # FIXME https://git.lavasoftware.org/lava/lava/issues/262
+    find lava_*/static/lava_*/js/ -type f -name *.min.js  -delete ;\
+    export NVM_DIR="$HOME/.nvm" ;\
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" ;\
+    for js in $(find lava_*/static/lava_*/js/ -type f -name *.js); do terser --compress --mangle --output ${js%.js}.min.js ${js}; done ;\
     make -C doc/v2/ html SPHINXBUILD="/usr/local/bin/sphinx-build" SPHINXOPTS="-j 4 -D today=\"$(LC_ALL=C date -u "+%B %d, %Y")\"" ;\
     rm -f doc/v2/_build/html/objects.inv ;\
-    find lava_*/static/lava_*/js/ -type f ! -name *.min.js ! -name *.flot.stack.js ! -name *.flot.time.js -delete ;\
     python3 setup.py install --prefix=/usr/local --root="git/lava" ;\
     python3 setup.py clean -a ;\
     find . -path '*/__pycache__/*' -delete ;\
