@@ -16,6 +16,7 @@ ENV RUNTIME_DEPS="\
     iproute2 \
     libguestfs-tools \
     lxc \
+    netcat-openbsd \
     nfs-kernel-server \
     openssh-client \
     python3-guestfs \
