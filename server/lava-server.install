@@ -2,7 +2,6 @@
 
 SITEPACKAGES=$(python3 -c 'import site; print(site.getsitepackages()[0])')
 
-cp -a git/lava${SITEPACKAGES}/dashboard_app ${SITEPACKAGES}/
 cp -a git/lava${SITEPACKAGES}/lava_rest_app ${SITEPACKAGES}/
 cp -a git/lava${SITEPACKAGES}/lava_results_app ${SITEPACKAGES}/
 cp -a git/lava${SITEPACKAGES}/lava_scheduler_app ${SITEPACKAGES}/
